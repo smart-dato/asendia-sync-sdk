@@ -132,6 +132,36 @@ it('throws the field errors of a rejected parcel', function () {
     }
 });
 
+it('names the parcel a carrier error left behind', function () {
+    $client = asendiaClient([
+        CreateParcelRequest::class => MockResponse::make(fixtureJson('carrier-error'), 400),
+    ]);
+
+    try {
+        $client->parcels()->create(swissParcel());
+        $this->fail('Expected a ValidationException.');
+    } catch (ValidationException $exception) {
+        expect($exception->getMessage())->toBe('Bad Request (Unknown Carrier Error)')
+            ->and($exception->parcelId)->toBe('69d32c8c-ebb3-465c-b403-0a562076df2b')
+            ->and($exception->fieldErrors)->toHaveCount(1);
+    }
+});
+
+it('reads the business validation errors', function () {
+    $client = asendiaClient([
+        CreateParcelRequest::class => MockResponse::make(fixtureJson('business-validation-error'), 400),
+    ]);
+
+    try {
+        $client->parcels()->create(swissParcel());
+        $this->fail('Expected a ValidationException.');
+    } catch (ValidationException $exception) {
+        expect($exception->getMessage())->toBe('Bad Request (options: Invalid options)')
+            ->and($exception->fieldErrors[0]->errorCode)->toBe('VE-013')
+            ->and($exception->parcelId)->toBeNull();
+    }
+});
+
 it('updates a parcel', function () {
     $client = asendiaClient([
         UpdateParcelRequest::class => MockResponse::make(fixtureJson('parcel'), 202),

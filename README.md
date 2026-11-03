@@ -107,7 +107,13 @@ PUDO searches page from 1.
 
 Failed requests throw `AsendiaSyncApiException` (a Saloon `RequestException`), or one of
 `ValidationException` (400, with `fieldErrors` and, for manifests, `alreadyManifestedParcels`),
-`NotFoundException` (404) and `RateLimitExceededException` (429). The message lists the field errors.
+`NotFoundException` (404) and `RateLimitExceededException` (429). The message lists the reasons.
+
+A booking the last mile carrier rejects ("Unknown Carrier Error") still leaves a parcel in error
+state at Asendia; its id is `$exception->parcelId`. Delete it, or it lingers.
+
+Asendia Sync requires `asendiaService.format` for every product, and Swiss Post needs an
+`articleNumber` on every customs item.
 
 Not covered: `POST /api/logtrade/transport-instructions`, which is meant for LogTrade.
 
