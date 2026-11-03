@@ -1,0 +1,11 @@
+{
+    "type": "https://www.asendia-sync.com/problem/problem-with-message",
+    "title": "Bad Request",
+    "status": "BAD_REQUEST",
+    "parameters": {},
+    "id": "69d32c8c-ebb3-465c-b403-0a562076df2b",
+    "errors": ["Unknown Carrier Error"],
+    "errorMessages": [{"message": "Unknown Carrier Error"}],
+    "message": "Bad Request",
+    "localizedMessage": "Bad Request"
+}

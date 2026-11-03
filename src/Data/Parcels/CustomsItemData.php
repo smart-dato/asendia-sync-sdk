@@ -6,7 +6,9 @@ use Spatie\LaravelData\Data;
 
 /**
  * One article of the customs declaration. Shipments from outside the EU into
- * the EU worth EUR 150 or less need `mPid` and `nsPid`.
+ * the EU worth EUR 150 or less need `mPid` and `nsPid`. Swiss Post (e-PAQ
+ * Select with Smartgate Direct to CH) refuses an item without `articleNumber`
+ * with the opaque "Unknown Carrier Error".
  */
 class CustomsItemData extends Data
 {

@@ -1,0 +1,18 @@
+{
+    "type": "https://www.asendia-sync.com/problem/problem-with-message",
+    "title": "Bad Request",
+    "status": "BAD_REQUEST",
+    "parameters": {},
+    "validationErrors": {
+        "valid": false,
+        "fields": {
+            "options": {
+                "violations": [
+                    {"attributes": {}, "message": "Invalid options", "errorCode": "VE-013", "severity": "BLOCKING"}
+                ]
+            }
+        }
+    },
+    "message": "Bad Request",
+    "localizedMessage": "Bad Request"
+}
