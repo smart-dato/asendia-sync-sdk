@@ -1,0 +1,40 @@
+{
+    "requestedLocation": {
+        "countryCode": "FR",
+        "zipCode": "75007",
+        "city": "Paris",
+        "address1": "Av. de la Bourdonnais",
+        "streetNumber": "14",
+        "latitude": 48.8584,
+        "longitude": 2.2945,
+        "radius": 5
+    },
+    "pudoPoints": [
+        {
+            "asendiaPudoPointId": "APP-000123",
+            "supplierId": "SUP00138",
+            "title": "Relais Tabac Bourdonnais",
+            "pudoType": "SHOP",
+            "mappedType": "PUDO",
+            "pudoId": "FR075007A",
+            "addressDetail": {
+                "countryCode": "FR",
+                "zipCode": "75007",
+                "city": "Paris",
+                "address1": "22 Av. de la Bourdonnais",
+                "latitude": 48.8591,
+                "longitude": 2.2958
+            },
+            "workHours": {
+                "mo": ["09:00-12:30", "14:00-19:00"],
+                "sa": ["09:00-12:00"],
+                "su": []
+            },
+            "distance": 0.21
+        }
+    ],
+    "status": "Success",
+    "code": 200,
+    "transactionKey": "TKVKGKJQPKLD6GU93",
+    "additionalData": {}
+}

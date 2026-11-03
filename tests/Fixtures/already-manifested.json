@@ -1,0 +1,17 @@
+{
+    "type": "https://www.asendia-sync.com/problem/problem-with-message",
+    "title": "Bad Request",
+    "status": "BAD_REQUEST",
+    "detail": {
+        "message": "Parcels were already manifested separately",
+        "list": [
+            {
+                "id": "3f1c2a9e-8d4b-4c6e-9a51-2b7d0e6f4a13",
+                "trackingNumber": "99CH123456789012",
+                "referencenumber": "OLC-1001"
+            }
+        ]
+    },
+    "message": "error.http.400",
+    "path": "/api/manifests"
+}

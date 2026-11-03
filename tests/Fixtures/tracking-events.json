@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "code": "ELECNOT",
+        "time": "2026-11-02T08:15:00Z",
+        "locationName": null,
+        "carrierEventDescription": "Shipment data received",
+        "locationCountry": "IT"
+    },
+    {
+        "code": "CUSTOMSCLEARED",
+        "time": "2026-11-03T14:02:31.512Z",
+        "locationName": "Basel",
+        "carrierEventDescription": "Customs clearance completed",
+        "locationCountry": "CH"
+    },
+    {
+        "code": "DELIVERY",
+        "time": "2026-11-04T10:41:07.123456Z",
+        "locationName": "Bern",
+        "carrierEventDescription": "Parcel delivered to recipient",
+        "locationCountry": "CH"
+    }
+]

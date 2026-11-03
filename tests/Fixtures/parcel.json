@@ -1,0 +1,12 @@
+{
+    "id": "3f1c2a9e-8d4b-4c6e-9a51-2b7d0e6f4a13",
+    "trackingNumber": "99CH123456789012",
+    "returnTrackingNumber": null,
+    "errorMessages": [],
+    "errorMessage": null,
+    "labelLocation": "https://www.asendia-sync.com/api/parcels/3f1c2a9e-8d4b-4c6e-9a51-2b7d0e6f4a13/label",
+    "returnLabelLocation": null,
+    "customsDocumentLocation": "https://www.asendia-sync.com/api/parcels/3f1c2a9e-8d4b-4c6e-9a51-2b7d0e6f4a13/customs-document",
+    "manifestLocation": null,
+    "commercialInvoiceLocation": null
+}
