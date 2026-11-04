@@ -162,6 +162,21 @@ it('reads the business validation errors', function () {
     }
 });
 
+it('reads the customs item violations and fills their message templates', function () {
+    $client = asendiaClient([
+        CreateParcelRequest::class => MockResponse::make(fixtureJson('order-line-validation-error'), 400),
+    ]);
+
+    try {
+        $client->parcels()->create(swissParcel());
+        $this->fail('Expected a ValidationException.');
+    } catch (ValidationException $exception) {
+        expect($exception->getMessage())->toBe('Bad Request (orderLines[0].weight: Value must be greater than 0.001 (got 0))')
+            ->and($exception->fieldErrors[0]->field)->toBe('orderLines[0].weight')
+            ->and($exception->fieldErrors[0]->errorCode)->toBe('VE-001');
+    }
+});
+
 it('updates a parcel', function () {
     $client = asendiaClient([
         UpdateParcelRequest::class => MockResponse::make(fixtureJson('parcel'), 202),
