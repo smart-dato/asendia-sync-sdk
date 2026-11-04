@@ -14,7 +14,8 @@ use Throwable;
  * reasons come in one of three shapes:
  *
  * - bean validation: `fieldErrors` [{field, message, errorCode}]
- * - business validation: `validationErrors.fields.<field>.violations` [{message, errorCode}]
+ * - business validation: `validationErrors.fields.<field>.violations` and
+ *   `validationErrors.orderLines[n].<field>.violations` (the customs items)
  * - carrier errors: `errors` [string] and `errorMessages` [{message}]; these
  *   come with the `id` of a parcel Asendia stored anyway, see $parcelId
  *
@@ -81,10 +82,10 @@ class AsendiaSyncApiException extends RequestException
     {
         $errors = [...self::asArray($data['fieldErrors'] ?? null), ...self::asArray($data['violations'] ?? null)];
 
-        foreach (self::asArray($data['validationErrors']['fields'] ?? null) as $field => $fieldErrors) {
-            foreach (self::asArray(is_array($fieldErrors) ? ($fieldErrors['violations'] ?? null) : null) as $violation) {
-                $errors[] = ['field' => (string) $field, ...(is_array($violation) ? $violation : [])];
-            }
+        $errors = [...$errors, ...self::violations(self::asArray($data['validationErrors']['fields'] ?? null))];
+
+        foreach (self::asArray($data['validationErrors']['orderLines'] ?? null) as $line => $orderLine) {
+            $errors = [...$errors, ...self::violations(self::asArray($orderLine), "orderLines[{$line}].")];
         }
 
         $messages = [
@@ -97,6 +98,43 @@ class AsendiaSyncApiException extends RequestException
         }
 
         return array_values(FieldErrorData::collect($errors));
+    }
+
+    /**
+     * Business validation reports `{field: {value, violations: [...]}}`; the
+     * messages are templates ("Value must be greater than {{value}}") filled
+     * from the violation's attributes, and the rejected value is appended.
+     *
+     * @param  array<array-key, mixed>  $fields
+     * @return list<array<string, mixed>>
+     */
+    private static function violations(array $fields, string $prefix = ''): array
+    {
+        $errors = [];
+
+        foreach ($fields as $field => $fieldErrors) {
+            $fieldErrors = self::asArray($fieldErrors);
+            $rejected = $fieldErrors['value'] ?? null;
+
+            foreach (self::asArray($fieldErrors['violations'] ?? null) as $violation) {
+                $violation = self::asArray($violation);
+                $message = (string) ($violation['message'] ?? '');
+
+                foreach (self::asArray($violation['attributes'] ?? null) as $attribute => $value) {
+                    if (is_scalar($value)) {
+                        $message = str_replace('{{'.$attribute.'}}', (string) $value, $message);
+                    }
+                }
+
+                if (is_scalar($rejected)) {
+                    $message .= ' (got '.var_export($rejected, true).')';
+                }
+
+                $errors[] = [...$violation, 'field' => $prefix.$field, 'message' => $message];
+            }
+        }
+
+        return $errors;
     }
 
     /**
